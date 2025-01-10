@@ -62,3 +62,22 @@ it('detects issues that always don\'t have cache', function (): void {
             'viewed',
         ]);
 });
+
+it('detects an incorrect en_US spelling when the language is en_GB', function () {
+    $spellchecker = (new InMemorySpellchecker(
+        (new Config(
+            whitelistedWords: [],
+            whitelistedDirectories: [],
+            language: 'en_GB'
+        )),
+        Aspell::create(),
+        Cache::default(),
+    ));
+
+    $ukIssues = $spellchecker->check('Initialise');
+    $usIssues = $spellchecker->check('Initialize');
+
+    expect($ukIssues)->toBeEmpty();
+    expect($usIssues)->toHaveCount(1);
+
+});
