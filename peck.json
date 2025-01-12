@@ -1,5 +1,6 @@
 {
     "preset": "base",
+    "language" : "en_US",
     "ignore": {
         "words": [
             "php"

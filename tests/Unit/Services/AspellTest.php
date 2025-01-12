@@ -68,3 +68,23 @@ it('detects issues that always don\'t have cache', function (): void {
             'veers',
         ]);
 });
+
+it('detects an incorrect en_US spelling when the language is en_GB', function (): void {
+    Aspell::flush();
+
+    $spellchecker = (new Aspell(
+        (new Config(
+            whitelistedWords: [],
+            whitelistedDirectories: [],
+            language: 'en_GB'
+        )),
+        Cache::default(),
+    ));
+
+    $ukIssues = $spellchecker->check('Initialise');
+    $usIssues = $spellchecker->check('Initialize');
+
+    expect($ukIssues)->toBeEmpty()
+        ->and($usIssues)->toHaveCount(1);
+
+});

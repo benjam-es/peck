@@ -39,6 +39,14 @@ final class Aspell implements Spellchecker
     }
 
     /**
+     * Flushes the process.
+     */
+    public static function flush(): void
+    {
+        self::$process = null;
+    }
+
+    /**
      * Checks of issues in the given text.
      *
      * @return array<int, Misspelling>
@@ -118,7 +126,7 @@ final class Aspell implements Spellchecker
             'utf-8',
             '-a',
             '--ignore-case',
-            '--lang=en_US',
+            '--lang='.$this->config->language,
         ]);
 
         $process->setTimeout(0);
