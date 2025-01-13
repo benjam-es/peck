@@ -75,7 +75,7 @@ it('detects an incorrect en_US spelling when the language is en_GB', function ()
     $spellchecker = (new Aspell(
         (new Config(
             whitelistedWords: [],
-            whitelistedDirectories: [],
+            whitelistedPaths: [],
             language: 'en_GB'
         )),
         Cache::default(),
